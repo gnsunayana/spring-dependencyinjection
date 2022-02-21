@@ -1,9 +1,6 @@
 package com.springframework.springdi;
 
-import com.springframework.springdi.controllers.ConstructorInjectedController;
-import com.springframework.springdi.controllers.MyController;
-import com.springframework.springdi.controllers.PropertyInjectedController;
-import com.springframework.springdi.controllers.SetterInjectedController;
+import com.springframework.springdi.controllers.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -14,6 +11,10 @@ public class SpringdiApplication {
 	public static void main(String[] args) {
 
 		ApplicationContext ctx =SpringApplication.run(SpringdiApplication.class, args);
+
+		I18nController i18nController =(I18nController) ctx.getBean("i18nController");
+		System.out.println(i18nController.sayHello());
+
 		MyController myController =(MyController) ctx.getBean("myController");
 		String greeting =myController.sayHello();
 		System.out.println("Inside main method");
