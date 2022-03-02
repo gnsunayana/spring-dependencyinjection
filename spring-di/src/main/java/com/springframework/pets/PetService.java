@@ -1,4 +1,4 @@
-package com.springframework.springdi.services;
+package com.springframework.pets;
 
 public interface PetService {
     String getPetType();
