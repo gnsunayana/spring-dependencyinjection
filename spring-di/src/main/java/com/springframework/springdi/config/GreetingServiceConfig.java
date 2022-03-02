@@ -1,5 +1,7 @@
 package com.springframework.springdi.config;
 
+import com.springframework.springdi.repositories.EnglishGreetingRepository;
+import com.springframework.springdi.repositories.EnglishGreetingRepositoryImpl;
 import com.springframework.springdi.services.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,10 +32,15 @@ public class GreetingServiceConfig {
           return new PrimaryGreetingService();
     }
 
+    @Bean
+    EnglishGreetingRepository englishGreetingRepository(){
+        return new EnglishGreetingRepositoryImpl();
+    }
+
     @Profile("EN")
     @Bean("i18nService")
-    I18nEnglishGreetingService i18nEnglishGreetingService(){
-        return new I18nEnglishGreetingService();
+    I18nEnglishGreetingService i18nEnglishGreetingService(EnglishGreetingRepository englishGreetingRepository){
+        return new I18nEnglishGreetingService(englishGreetingRepository);
     }
     // If you dont give the name in the bean annotation, the name of the bean created will be the method name by default. You can
     // override it by giving a name in the @Bean annotation. In his example he changed the value of the method name for one
