@@ -1,20 +1,21 @@
 package com.springframework.springdi.config;
 
+import com.springframework.pets.DogPetService;
+import com.springframework.pets.PetService;
+import com.springframework.pets.PetServiceFactory;
 import com.springframework.springdi.repositories.EnglishGreetingRepository;
 import com.springframework.springdi.repositories.EnglishGreetingRepositoryImpl;
 import com.springframework.springdi.services.*;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.*;
 
+@ImportResource("classpath:springdi-config.xml")
 @Configuration
 public class GreetingServiceConfig {
-
-    @Bean
+   // Implementing it with xml configuration
+   /* @Bean
     ConstructorGreetingService constructorGreetingService(){
         return new ConstructorGreetingService();
-    }
+    }*/
 
     @Bean
     PropertyInjectedGreetingService propertyInjectedGreetingService(){
@@ -49,5 +50,22 @@ public class GreetingServiceConfig {
     @Bean("i18nService")
     I18nSpanishGreetingService i18nSpanishGreetingService(){
         return new I18nSpanishGreetingService();
+    }
+
+    @Bean
+    PetServiceFactory petServiceFactory(){
+        return new PetServiceFactory();
+    }
+
+    @Bean
+    @Profile({"dog","default"})
+    PetService dogPetService(PetServiceFactory petServiceFactory){
+        return petServiceFactory.getPetService("dog");
+    }
+
+    @Bean
+    @Profile("cat")
+    PetService catPetService(PetServiceFactory petServiceFactory){
+        return petServiceFactory.getPetService("cat");
     }
 }

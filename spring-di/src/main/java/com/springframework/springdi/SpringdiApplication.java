@@ -1,13 +1,16 @@
 package com.springframework.springdi;
 
 import com.springframework.springdi.controllers.*;
+import com.springframework.springdi.services.PrototypeBean;
+import com.springframework.springdi.services.SingletonBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Profile;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.springframework.springdi","com.springframework.pets"})
+//@ComponentScan(basePackages = {"com.springframework.springdi","com.springframework.pets"})
 public class SpringdiApplication {
 
 	public static void main(String[] args) {
@@ -42,6 +45,21 @@ public class SpringdiApplication {
 
 		ConstructorInjectedController constructorInjectedController = (ConstructorInjectedController)ctx.getBean("constructorInjectedController");
 		System.out.println(constructorInjectedController.getGreeting());
+
+
+		System.out.println("--------Bean Scopes-----");
+		SingletonBean singletonBean1 =(SingletonBean) ctx.getBean("singletonBean");
+		//SingletonBean singletonBean1 = ctx.getBean(SingletonBean.class);
+		System.out.println(singletonBean1.getMyScope());
+		SingletonBean singletonBean2 = (SingletonBean)ctx.getBean("singletonBean");
+		System.out.println(singletonBean2.getMyScope());
+
+		PrototypeBean prototypeBean1 = (PrototypeBean)ctx.getBean("prototypeBean");
+		//PrototypeBean prototypeBean1 = ctx.getBean(PrototypeBean.class);
+		System.out.println(prototypeBean1.getMyScope());
+		PrototypeBean prototypeBean2 = (PrototypeBean)ctx.getBean("prototypeBean");
+		System.out.println(prototypeBean2.getMyScope());
+
 
 
 
