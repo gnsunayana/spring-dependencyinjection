@@ -1,6 +1,7 @@
 package com.springframework.springdi;
 
 import com.springframework.springdi.controllers.*;
+import com.springframework.springdi.datasource.FakeDataSource;
 import com.springframework.springdi.services.PrototypeBean;
 import com.springframework.springdi.services.SingletonBean;
 import org.springframework.boot.SpringApplication;
@@ -59,6 +60,13 @@ public class SpringdiApplication {
 		System.out.println(prototypeBean1.getMyScope());
 		PrototypeBean prototypeBean2 = (PrototypeBean)ctx.getBean("prototypeBean");
 		System.out.println(prototypeBean2.getMyScope());
+
+
+		System.out.println("Illustrating Externalising properties");
+		FakeDataSource fakeDataSource= (FakeDataSource)ctx.getBean("fakeDataSource");
+		System.out.println(fakeDataSource.getUsername());
+		System.out.println(fakeDataSource.getPassword());
+		System.out.println(fakeDataSource.getJdbcurl());
 
 
 
