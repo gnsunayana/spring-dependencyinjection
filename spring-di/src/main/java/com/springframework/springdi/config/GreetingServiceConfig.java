@@ -10,7 +10,8 @@ import com.springframework.springdi.services.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 
-@PropertySource("classpath:datasource.properties")
+//@PropertySource("classpath:datasource.properties")
+//Taking out @PropertySource annotation to use Spring boot capabilities.
 @ImportResource("classpath:springdi-config.xml")
 @Configuration
 public class GreetingServiceConfig {
