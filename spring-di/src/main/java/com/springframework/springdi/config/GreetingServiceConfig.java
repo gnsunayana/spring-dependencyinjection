@@ -8,8 +8,10 @@ import com.springframework.springdi.repositories.EnglishGreetingRepository;
 import com.springframework.springdi.repositories.EnglishGreetingRepositoryImpl;
 import com.springframework.springdi.services.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.*;
 
+@EnableConfigurationProperties(SpringConstructorConfig.class)
 //@PropertySource("classpath:datasource.properties")
 //Taking out @PropertySource annotation to use Spring boot capabilities.
 @ImportResource("classpath:springdi-config.xml")
@@ -21,7 +23,8 @@ public class GreetingServiceConfig {
         return new ConstructorGreetingService();
     }*/
 
-    @Bean
+    //This is little verbose so we are changing to do it the below way
+  /*  @Bean
     FakeDataSource fakeDataSource(@Value("${guru.username}") String username,
                                   @Value("${guru.password}") String password,
                                   @Value("${guru.jdbcurl}") String jdbcurl){
@@ -30,8 +33,16 @@ public class GreetingServiceConfig {
           fakeDataSource.setPassword(password);
           fakeDataSource.setJdbcurl(jdbcurl);
           return fakeDataSource;
+    }*/
+    // You can use SpringdiConfiguration also as the method parameter here to supply the value
+    @Bean
+    FakeDataSource fakeDataSource(SpringConstructorConfig springConstructorConfig){
+        FakeDataSource fakeDataSource= new FakeDataSource();
+        fakeDataSource.setUsername(springConstructorConfig.getUsername());
+        fakeDataSource.setPassword(springConstructorConfig.getPassword());
+        fakeDataSource.setJdbcurl(springConstructorConfig.getJdbcurl());
+        return fakeDataSource;
     }
-
     @Bean
     PropertyInjectedGreetingService propertyInjectedGreetingService(){
         return new PropertyInjectedGreetingService();

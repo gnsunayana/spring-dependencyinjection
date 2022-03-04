@@ -1,5 +1,7 @@
 package com.springframework.springdi;
 
+import com.springframework.springdi.config.SpringConstructorConfig;
+import com.springframework.springdi.config.SpringdiConfiguration;
 import com.springframework.springdi.controllers.*;
 import com.springframework.springdi.datasource.FakeDataSource;
 import com.springframework.springdi.services.PrototypeBean;
@@ -62,14 +64,24 @@ public class SpringdiApplication {
 		System.out.println(prototypeBean2.getMyScope());
 
 
-		System.out.println("Illustrating Externalising properties");
+		System.out.println("Fake Data Source:");
 		FakeDataSource fakeDataSource= (FakeDataSource)ctx.getBean("fakeDataSource");
 		System.out.println(fakeDataSource.getUsername());
 		System.out.println(fakeDataSource.getPassword());
 		System.out.println(fakeDataSource.getJdbcurl());
 
 
+		System.out.println("--------Config Props Bean-------");
+		SpringdiConfiguration springdiConfiguration = ctx.getBean(SpringdiConfiguration.class);
+		System.out.println(springdiConfiguration.getUsername());
+		System.out.println(springdiConfiguration.getPassword());
+		System.out.println(springdiConfiguration.getJdbcurl());
 
+		System.out.println("----------Constructor Binding --------");
+		SpringConstructorConfig springConstructorConfig = ctx.getBean(SpringConstructorConfig.class);
+		System.out.println(springConstructorConfig.getUsername());
+		System.out.println(springConstructorConfig.getPassword());
+		System.out.println(springConstructorConfig.getJdbcurl());
 
 	}
 
